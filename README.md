@@ -70,3 +70,7 @@ Python · XGBoost · scikit-learn · pandas
 ## Refresh the descriptive dashboard
 
 Run `python scripts/refresh_dashboard_data.py` from the repository root, then serve `docs/` with `python3 -m http.server 8000 --directory docs`. Source hashes and interpretation notes are in [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md).
+
+## Dashboard exploration
+
+The KPI strip reports stored fold scores, the positive-class share, and missing numeric cells divided by 10,000 × 64. The data-quality selector changes the displayed field detail, not the overall population. CSV export contains exactly the displayed chart series.

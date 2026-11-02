@@ -7,3 +7,7 @@
 - The refresh script does not train or validate a predictive model. Captions and result claims need review if the input changes.
 
 Five fold ROC-AUC values are transcribed from the saved output of `571_final.ipynb`, using the raw-input XGBoost model. They are historical cross-validation scores, not a new run.
+
+## Interactive analysis
+
+The KPI strip reports stored fold scores, the positive-class share, and missing numeric cells divided by 10,000 × 64. The data-quality selector changes the displayed field detail, not the overall population. CSV export contains exactly the displayed chart series.

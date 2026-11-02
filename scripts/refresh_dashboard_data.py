@@ -19,5 +19,8 @@ charts[0]["series"][0]["values"] = [len(rows) - positive, positive]
 charts[1]["labels"] = [key for key, value in missing]
 charts[1]["series"][0]["values"] = [value for key, value in missing]
 # Fold scores are transcribed from stored notebook output, not regenerated here.
+fields = [key for key in rows[0] if key != "class"]
+data["fields"] = [{"field": field, "missing": sum(r[field].strip() in ("", "?", "NA", "nan") for r in rows)} for field in fields]
+data["overview"] = {"rows": len(rows), "positives": positive, "features": len(fields), "missing": sum(f["missing"] for f in data["fields"])}
 target.write_text(json.dumps(data, indent=2) + "\n")
 print(f"Refreshed descriptive charts from {len(rows):,} input rows; review captions if the source changed.")

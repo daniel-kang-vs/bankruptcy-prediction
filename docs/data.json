@@ -3,17 +3,11 @@
     {
       "title": "Class balance",
       "caption": "473 positive labels among 10,000 training firms. Accuracy alone would hide the minority class.",
-      "labels": [
-        "Solvent",
-        "Bankrupt"
-      ],
+      "labels": ["Solvent", "Bankrupt"],
       "series": [
         {
           "label": "Firms",
-          "values": [
-            9527,
-            473
-          ]
+          "values": [9527, 473]
         }
       ],
       "unit": "Firms"
@@ -36,18 +30,7 @@
       "series": [
         {
           "label": "Missing rows",
-          "values": [
-            4999,
-            2202,
-            1553,
-            1460,
-            1181,
-            1172,
-            1168,
-            1160,
-            1148,
-            1083
-          ]
+          "values": [4999, 2202, 1553, 1460, 1181, 1172, 1168, 1160, 1148, 1083]
         }
       ],
       "unit": "Rows"
@@ -55,26 +38,279 @@
     {
       "title": "Five-fold validation",
       "caption": "Stored raw-input XGBoost scores. This is not an independent test-set result.",
-      "labels": [
-        "Fold 1",
-        "Fold 2",
-        "Fold 3",
-        "Fold 4",
-        "Fold 5"
-      ],
+      "labels": ["Fold 1", "Fold 2", "Fold 3", "Fold 4", "Fold 5"],
       "series": [
         {
           "label": "ROC-AUC",
-          "values": [
-            0.91790203,
-            0.93594137,
-            0.89631165,
-            0.9116121,
-            0.87460146
-          ]
+          "values": [0.91790203, 0.93594137, 0.89631165, 0.9116121, 0.87460146]
         }
       ],
       "unit": "ROC-AUC"
     }
-  ]
+  ],
+  "kind": "bank",
+  "fields": [
+    {
+      "field": "Attr1",
+      "missing": 1002
+    },
+    {
+      "field": "Attr2",
+      "missing": 988
+    },
+    {
+      "field": "Attr3",
+      "missing": 1
+    },
+    {
+      "field": "Attr4",
+      "missing": 36
+    },
+    {
+      "field": "Attr5",
+      "missing": 1073
+    },
+    {
+      "field": "Attr6",
+      "missing": 993
+    },
+    {
+      "field": "Attr7",
+      "missing": 1
+    },
+    {
+      "field": "Attr8",
+      "missing": 974
+    },
+    {
+      "field": "Attr9",
+      "missing": 1000
+    },
+    {
+      "field": "Attr10",
+      "missing": 1056
+    },
+    {
+      "field": "Attr11",
+      "missing": 12
+    },
+    {
+      "field": "Attr12",
+      "missing": 1015
+    },
+    {
+      "field": "Attr13",
+      "missing": 1014
+    },
+    {
+      "field": "Attr14",
+      "missing": 1007
+    },
+    {
+      "field": "Attr15",
+      "missing": 1033
+    },
+    {
+      "field": "Attr16",
+      "missing": 1022
+    },
+    {
+      "field": "Attr17",
+      "missing": 1020
+    },
+    {
+      "field": "Attr18",
+      "missing": 1
+    },
+    {
+      "field": "Attr19",
+      "missing": 1013
+    },
+    {
+      "field": "Attr20",
+      "missing": 27
+    },
+    {
+      "field": "Attr21",
+      "missing": 2202
+    },
+    {
+      "field": "Attr22",
+      "missing": 1009
+    },
+    {
+      "field": "Attr23",
+      "missing": 995
+    },
+    {
+      "field": "Attr24",
+      "missing": 222
+    },
+    {
+      "field": "Attr25",
+      "missing": 995
+    },
+    {
+      "field": "Attr26",
+      "missing": 1040
+    },
+    {
+      "field": "Attr27",
+      "missing": 1553
+    },
+    {
+      "field": "Attr28",
+      "missing": 1148
+    },
+    {
+      "field": "Attr29",
+      "missing": 979
+    },
+    {
+      "field": "Attr30",
+      "missing": 1034
+    },
+    {
+      "field": "Attr31",
+      "missing": 1041
+    },
+    {
+      "field": "Attr32",
+      "missing": 1026
+    },
+    {
+      "field": "Attr33",
+      "missing": 1013
+    },
+    {
+      "field": "Attr34",
+      "missing": 1040
+    },
+    {
+      "field": "Attr35",
+      "missing": 997
+    },
+    {
+      "field": "Attr36",
+      "missing": 1058
+    },
+    {
+      "field": "Attr37",
+      "missing": 4999
+    },
+    {
+      "field": "Attr38",
+      "missing": 999
+    },
+    {
+      "field": "Attr39",
+      "missing": 983
+    },
+    {
+      "field": "Attr40",
+      "missing": 1030
+    },
+    {
+      "field": "Attr41",
+      "missing": 1181
+    },
+    {
+      "field": "Attr42",
+      "missing": 27
+    },
+    {
+      "field": "Attr43",
+      "missing": 1055
+    },
+    {
+      "field": "Attr44",
+      "missing": 1055
+    },
+    {
+      "field": "Attr45",
+      "missing": 531
+    },
+    {
+      "field": "Attr46",
+      "missing": 1015
+    },
+    {
+      "field": "Attr47",
+      "missing": 1033
+    },
+    {
+      "field": "Attr48",
+      "missing": 990
+    },
+    {
+      "field": "Attr49",
+      "missing": 1051
+    },
+    {
+      "field": "Attr50",
+      "missing": 1067
+    },
+    {
+      "field": "Attr51",
+      "missing": 1
+    },
+    {
+      "field": "Attr52",
+      "missing": 1083
+    },
+    {
+      "field": "Attr53",
+      "missing": 1160
+    },
+    {
+      "field": "Attr54",
+      "missing": 1168
+    },
+    {
+      "field": "Attr55",
+      "missing": 983
+    },
+    {
+      "field": "Attr56",
+      "missing": 1016
+    },
+    {
+      "field": "Attr57",
+      "missing": 953
+    },
+    {
+      "field": "Attr58",
+      "missing": 16
+    },
+    {
+      "field": "Attr59",
+      "missing": 1003
+    },
+    {
+      "field": "Attr60",
+      "missing": 1460
+    },
+    {
+      "field": "Attr61",
+      "missing": 26
+    },
+    {
+      "field": "Attr62",
+      "missing": 27
+    },
+    {
+      "field": "Attr63",
+      "missing": 1031
+    },
+    {
+      "field": "Attr64",
+      "missing": 1172
+    }
+  ],
+  "overview": {
+    "rows": 10000,
+    "positives": 473,
+    "features": 64,
+    "missing": 59755
+  }
 }
