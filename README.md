@@ -8,6 +8,8 @@ An XGBoost classifier ranks firms using 64 financial ratios and evaluates discri
 
 [Case study](https://daniel-kang-vs.github.io/projects/bankruptcy.html) · [Source evidence](https://github.com/daniel-kang-vs/bankruptcy-prediction/blob/main/571_final.ipynb) · [Live dashboard](https://daniel-kang-vs.github.io/bankruptcy-prediction/)
 
+[![Dashboard preview](https://raw.githubusercontent.com/daniel-kang-vs/daniel-kang-vs.github.io/main/pngs/project-bankruptcy.png)](https://daniel-kang-vs.github.io/bankruptcy-prediction/)
+
 ## Highlights
 
 - **10,000 training firms**
