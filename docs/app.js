@@ -1,75 +1,155 @@
-Chart.defaults.color = "#8b8b9e";
-Chart.defaults.borderColor = "rgba(255,255,255,0.04)";
-Chart.defaults.font.family = "Inter, sans-serif";
-
-new Chart(document.getElementById("classDistChart"), {
-  type: "doughnut",
-  data: {
-    labels: ["Survived", "Bankrupt"],
-    datasets: [{ data: [9573, 427], backgroundColor: ["#818cf8", "#f87171"], borderWidth: 0 }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { position: "bottom" } }
+const colors = ["#4f46e5", "#0891b2", "#b45309"];
+Chart.defaults.color = "#596277";
+Chart.defaults.font.family = "Figtree, sans-serif";
+Chart.defaults.borderColor = "#e6e9f2";
+let charts = [];
+function draw(spec, id) {
+  const card = document.createElement("article");
+  card.className = "chart-card" + (spec.labels.length > 8 ? " wide" : "");
+  const h = document.createElement("h3");
+  h.textContent = spec.title;
+  const p = document.createElement("p");
+  p.textContent = spec.caption;
+  card.append(h, p);
+  const box = document.createElement("div");
+  box.className = "chart-box";
+  if (spec.labels.length > 8)
+    box.style.height = Math.max(330, spec.labels.length * 30) + "px";
+  const canvas = document.createElement("canvas");
+  canvas.id = id;
+  canvas.setAttribute("role", "img");
+  canvas.setAttribute(
+    "aria-label",
+    spec.title + ". Exact values are available in the table below.",
+  );
+  box.append(canvas);
+  card.append(box);
+  const details = document.createElement("details");
+  const summary = document.createElement("summary");
+  summary.textContent = "View exact values";
+  details.append(summary);
+  const wrap = document.createElement("div");
+  wrap.className = "table-wrap";
+  const table = document.createElement("table");
+  const cap = document.createElement("caption");
+  cap.textContent = spec.title + " (" + spec.unit + ")";
+  table.append(cap);
+  const head = document.createElement("thead"),
+    hr = document.createElement("tr");
+  ["Category", ...spec.series.map((s) => s.label)].forEach((v) => {
+    const th = document.createElement("th");
+    th.scope = "col";
+    th.textContent = v;
+    hr.append(th);
+  });
+  head.append(hr);
+  table.append(head);
+  const body = document.createElement("tbody");
+  spec.labels.forEach((v, i) => {
+    const tr = document.createElement("tr");
+    [v, ...spec.series.map((s) => s.values[i])].forEach((x, j) => {
+      const td = document.createElement(j === 0 ? "th" : "td");
+      if (j === 0) td.scope = "row";
+      td.textContent =
+        typeof x === "number"
+          ? x.toLocaleString(undefined, { maximumFractionDigits: 4 })
+          : x;
+      tr.append(td);
+    });
+    body.append(tr);
+  });
+  table.append(body);
+  wrap.append(table);
+  details.append(wrap);
+  card.append(details);
+  document.getElementById("charts").append(card);
+  charts.push(
+    new Chart(canvas, {
+      type: "bar",
+      data: {
+        labels: spec.labels,
+        datasets: spec.series.map((s, i) => ({
+          label: s.label,
+          data: s.values,
+          backgroundColor: colors[i % colors.length],
+          borderRadius: 3,
+        })),
+      },
+      options: {
+        animation: false,
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: spec.series.length > 1, position: "bottom" },
+        },
+        scales: {
+          x: {
+            ticks: { maxRotation: 65, autoSkip: false, font: { size: 11 } },
+          },
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: spec.unit },
+            ...(spec.unit === "ROC-AUC" ? { max: 1 } : {}),
+            ...(spec.unit.startsWith("%") ? { max: 100 } : {}),
+          },
+        },
+      },
+    }),
+  );
+}
+function render() {
+  charts.forEach((c) => c.destroy());
+  charts = [];
+  document.getElementById("charts").replaceChildren();
+  const specs = [...DATA.charts];
+  if (DATA.slots) {
+    const r = DATA.slots[document.getElementById("slot").value];
+    specs.push({
+      title: "Total modeled cost for selected slot",
+      caption:
+        "A: flat idle cost, fixed fleet. B: borough idle cost, fixed fleet. C: borough idle cost, adjustable fleet; total includes rental adjustment.",
+      labels: ["A · baseline", "B · fixed fleet", "C · adjustable fleet"],
+      series: [
+        {
+          label: "Total modeled cost",
+          values: ["total_cost_A", "total_cost_B", "total_cost_C"].map((k) =>
+            Number(r[k]),
+          ),
+        },
+      ],
+      unit: "USD / slot",
+    });
+    document.getElementById("slotStatus").textContent =
+      "Model C selected fleet: " +
+      Number(r.F_star).toLocaleString(undefined, { maximumFractionDigits: 0 }) +
+      " vehicles. " +
+      r.direction;
   }
-});
-
-new Chart(document.getElementById("missingChart"), {
-  type: "bar",
-  data: {
-    labels: ["Attr37","Attr21","Attr27","Attr45","Attr60","Attr6","Attr17","Attr35"],
-    datasets: [{ data: [34.2, 28.7, 22.1, 18.9, 15.4, 12.8, 11.3, 9.6],
-      backgroundColor: "#f87171", borderRadius: 4 }]
-  },
-  options: {
-    indexAxis: "y", responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: { x: { title: { display: true, text: "% Missing" }, max: 40 } }
-  }
-});
-
-new Chart(document.getElementById("pipelineChart"), {
-  type: "bar",
-  data: {
-    labels: ["Raw", "+ Winsorize", "+ KNN Impute", "+ XGBoost"],
-    datasets: [{ label: "CV AUC", data: [0.872, 0.891, 0.902, 0.907],
-      backgroundColor: ["#334155", "#6366f1", "#818cf8", "#a5b4fc"], borderRadius: 6 }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: { y: { min: 0.85, max: 0.92, title: { display: true, text: "ROC-AUC" } } }
-  }
-});
-
-const foldAUCs = [0.9179, 0.9359, 0.8963, 0.9116, 0.8746];
-const meanAUC = 0.9073;
-
-new Chart(document.getElementById("foldChart"), {
-  type: "bar",
-  data: {
-    labels: ["F1","F2","F3","F4","F5"],
-    datasets: [{ data: foldAUCs,
-      backgroundColor: foldAUCs.map(v => v >= meanAUC ? "#818cf8" : "#f87171"), borderRadius: 6 }]
-  },
-  options: {
-    responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: { y: { min: 0.85, max: 0.95 } }
-  }
-});
-
-new Chart(document.getElementById("leaderboardChart"), {
-  type: "bar",
-  data: {
-    labels: ["1st","2nd","3rd (You)","4th","5th","6th","7th","8th"],
-    datasets: [{ data: [0.918, 0.912, 0.907, 0.901, 0.898, 0.894, 0.889, 0.885],
-      backgroundColor: ["#fbbf24","#94a3b8","#818cf8","#334155","#334155","#334155","#334155","#334155"],
-      borderRadius: 4 }]
-  },
-  options: {
-    indexAxis: "y", responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { display: false } },
-    scales: { x: { min: 0.87, max: 0.93, title: { display: true, text: "Mean AUC" } } }
-  }
-});
+  const choice = document.getElementById("view").value;
+  specs.forEach((s, i) => {
+    if (choice === "all" || Number(choice) === i) draw(s, "chart" + i);
+  });
+}
+fetch("data.json")
+  .then((r) => {
+    if (!r.ok) throw Error("HTTP " + r.status);
+    return r.json();
+  })
+  .then((data) => {
+    window.DATA = data;
+    const view = document.getElementById("view");
+    data.charts.forEach((s, i) => {
+      const o = document.createElement("option");
+      o.value = i;
+      o.textContent = s.title;
+      view.append(o);
+    });
+    view.addEventListener("change", render);
+    document.getElementById("slot")?.addEventListener("change", render);
+    render();
+  })
+  .catch((e) => {
+    document.getElementById("charts").textContent =
+      "The analysis could not load. Please reload or inspect the source data using the link above.";
+    console.error(e);
+  });
